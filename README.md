@@ -25,14 +25,16 @@ wandb login YOUR-LOGIN # login if you want the logger to sync results to your We
 ### Run model
 
 ```bash
-# ARC-AGI-1
+## Prepare datasets
+
+## ARC-AGI-1
 python -m dataset.build_arc_dataset \
   --input-file-prefix kaggle/combined/arc-agi \
   --output-dir data/arc1concept-aug-1000 \
   --subsets training evaluation concept \
   --test-set-name evaluation
 
-# ARC-AGI-2
+## ARC-AGI-2
 python -m dataset.build_arc_dataset \
   --input-file-prefix kaggle/combined/arc-agi \
   --output-dir data/arc2concept-aug-1000 \
@@ -42,9 +44,10 @@ python -m dataset.build_arc_dataset \
 
 ## Experiments
 
-### Assume training of compact model on ARC-AGI-1 (modify config class for different settings):
+## To run DIS training procedure use the following command.
+## Assume training of compact model (0.8M) on ARC-AGI-1 (modify config class for different settings).
 
-torchrun --nproc_per_node=NUM_GPUS train_arc_tiny_corrupt.py
+torchrun --nproc_per_node=NUM_GPUS train_arc_tiny_corrupt.py 
 ```
 ### Architecture & Base
 We adapted our method and code from the official codebase for "Less is More: Recursive Reasoning with Tiny Networks"  [Paper](https://arxiv.org/abs/2510.04871). As well as from the Hierarchical Reasoning Model [code](https://github.com/sapientinc/HRM) and the Hierarchical Reasoning Model Analysis [code](https://github.com/arcprize/hierarchical-reasoning-model-analysis). 
