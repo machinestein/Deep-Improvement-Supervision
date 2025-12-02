@@ -1,15 +1,14 @@
 # Deep Improvement Supervision
 
-Recent work has demonstrated that small, looped architectures, such as Tiny Recursive Models (TRMs), can outperform Large Language Models (LLMs) on complex reasoning tasks, including the Abstraction and Reasoning Corpus ARC. In this work, we investigate a core question: how can we further improve the efficiency of these methods with minimal changes? To address this, we frame the asymmetric latent reasoning of TRMs as both an implicit policy improvement algorithm and a form of classifier-free diffusion guidance. Building on these insights, we propose a novel training scheme that provides a target for each loop during training. We demonstrate that our approach significantly enhances training efficiency. Our method reduces the total number of forward passes by 18× and eliminates halting mechanisms, while maintaining quality comparable to standard TRMs. Notably, we achieve 24% accuracy on ARC-1 with only 0.8M parameters, outperforming most LLMs.
+### Abstract
+Recent work has demonstrated that small, looped architectures, such as Tiny Recursive Models (TRMs), can outperform Large Language Models (LLMs) on complex reasoning tasks, including the Abstraction and Reasoning Corpus ARC. In this work, we investigate a core question: how can we further improve the efficiency of these methods with minimal changes? To address this, we propose a novel training scheme that provides a target for each loop during training. Our method reduces the total number of forward passes by 18× and eliminates halting mechanisms, while maintaining quality comparable to standard TRMs. Notably, we achieve 24% accuracy on ARC-1 with only 0.8M parameters.
 
 
 ### Method
 
-Deep Improvement Supervision (DIS) While the standard Tiny Recursive Model (TRM) relies on a "black-box" recurrence where the model must implicitly discover how to improve, DIS explicitly enforces a positive Advantage Margin at every recursive step. We achieve this by constructing a sequence of intermediate targets that strictly contract toward the solution.
+**Deep Improvement Supervision (DIS)** While the standard Tiny Recursive Model relies on a "black-box" recurrence where the model must implicitly discover how to improve, DIS explicitly enforces a positive Advantage Margin at every recursive step. We achieve this by constructing a sequence of intermediate targets that strictly contract toward the solution. Our results are grounded in analyses that formally frame the latent reasoning of TRMs as both an **implicit policy improvement** algorithm and a form of **classifier-free diffusion guidance**.
 
-Discrete Diffusion Targets Instead of supervising only the final output, DIS uses a target generator—specifically a discrete diffusion-style schedule—that produces a sequence of intermediate answers. The model is trained to match the reference logits to the previous target and the conditional logits to the improved target. This forces the residual update to explicitly encode the transition toward the solution, effectively turning the reasoning process into a verifiable, step-wise policy improvement scheme.
-
-Efficiency Gains By using a fixed number of refinement steps (e.g., 6 steps) with explicit targets, we eliminate the need for the learned halting mechanism and the "no-grad" warm-up cycles required by the original TRM. This results in a massive reduction in compute—using 3x fewer supervision steps and 8x fewer latent reasoning steps while achieving state-of-the-art performance for this parameter class
+**Discrete Diffusion Targets** Instead of supervising only the final output, DIS uses a target generator—specifically a discrete diffusion-style schedule—that produces a sequence of intermediate answers. The model is trained to match the reference logits to the previous target and the conditional logits to the improved target. This forces the residual update to explicitly encode the transition toward the solution, effectively turning the reasoning process into a verifiable, step-wise policy improvement scheme. Efficiency Gains By using a fixed number of refinement steps (e.g., 6 steps) with explicit targets, we eliminate the need for the learned halting mechanism and the "no-grad" warm-up cycles required by the original TRM. 
 
 ### Architecture & Base
 This is based on the the codebase for the paper: "Less is More: Recursive Reasoning with Tiny Networks". [Paper](https://arxiv.org/abs/2510.04871). Also this code is based on the Hierarchical Reasoning Model [code](https://github.com/sapientinc/HRM) and the Hierarchical Reasoning Model Analysis [code](https://github.com/arcprize/hierarchical-reasoning-model-analysis). 
@@ -23,7 +22,6 @@ This is based on the the codebase for the paper: "Less is More: Recursive Reason
 pip install --upgrade pip wheel setuptools
 pip install --pre --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu126 # install torch based on your cuda version
 pip install -r requirements.txt # install requirements
-pip install --no-cache-dir --no-build-isolation adam-atan2 
 wandb login YOUR-LOGIN # login if you want the logger to sync results to your Weights & Biases (https://wandb.ai/)
 ```
 
@@ -47,9 +45,8 @@ python -m dataset.build_arc_dataset \
 
 ## Experiments
 
-### Assume training of compact model on ARC-AGI-1:
+### Assume training of compact model on ARC-AGI-1 (modify config class for different settings):
 
 ```bash
 torchrun --nproc_per_node=NUM_GPUS train_arc_tiny_corrupt.py
-
 ```
