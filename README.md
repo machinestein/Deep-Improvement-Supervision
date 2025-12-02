@@ -10,9 +10,6 @@ Recent work has demonstrated that small, looped architectures, such as Tiny Recu
 
 **Discrete Diffusion Targets** Instead of supervising only the final output, DIS uses a target generator—specifically a discrete diffusion-style schedule—that produces a sequence of intermediate answers. The model is trained to match the reference logits to the previous target and the conditional logits to the improved target. This forces the residual update to explicitly encode the transition toward the solution, effectively turning the reasoning process into a verifiable, step-wise policy improvement scheme. Efficiency Gains By using a fixed number of refinement steps (e.g., 6 steps) with explicit targets, we eliminate the need for the learned halting mechanism and the "no-grad" warm-up cycles required by the original TRM. 
 
-### Architecture & Base
-This is based on the the codebase for the paper: "Less is More: Recursive Reasoning with Tiny Networks". [Paper](https://arxiv.org/abs/2510.04871). Also this code is based on the Hierarchical Reasoning Model [code](https://github.com/sapientinc/HRM) and the Hierarchical Reasoning Model Analysis [code](https://github.com/arcprize/hierarchical-reasoning-model-analysis). 
-
 ### Requirements
 
 - Python 3.10 (or similar)
@@ -49,3 +46,5 @@ python -m dataset.build_arc_dataset \
 
 torchrun --nproc_per_node=NUM_GPUS train_arc_tiny_corrupt.py
 ```
+### Architecture & Base
+We adapted our method and code from the official codebase for "Less is More: Recursive Reasoning with Tiny Networks"  [Paper](https://arxiv.org/abs/2510.04871). As well as from the Hierarchical Reasoning Model [code](https://github.com/sapientinc/HRM) and the Hierarchical Reasoning Model Analysis [code](https://github.com/arcprize/hierarchical-reasoning-model-analysis). 
