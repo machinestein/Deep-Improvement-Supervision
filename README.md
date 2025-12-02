@@ -1,4 +1,4 @@
-# Deep Improvement Supervision
+# Deep Improvement Supervision [paper](https://arxiv.org/pdf/2511.16886)
 
 ### Abstract
 Recent work has demonstrated that small, looped architectures, such as Tiny Recursive Models (TRMs), can outperform Large Language Models (LLMs) on complex reasoning tasks, including the Abstraction and Reasoning Corpus ARC. In this work, we investigate a core question: how can we further improve the efficiency of these methods with minimal changes? To address this, we propose a novel training scheme that provides a target for each loop during training. Our method reduces the total number of forward passes by 18× and eliminates halting mechanisms, while maintaining quality comparable to standard TRMs. Notably, we achieve 24% accuracy on ARC-1 with only 0.8M parameters.
@@ -48,3 +48,8 @@ torchrun --nproc_per_node=NUM_GPUS train_arc_tiny_corrupt.py
 ```
 ### Architecture & Base
 We adapted our method and code from the official codebase for "Less is More: Recursive Reasoning with Tiny Networks"  [Paper](https://arxiv.org/abs/2510.04871). As well as from the Hierarchical Reasoning Model [code](https://github.com/sapientinc/HRM) and the Hierarchical Reasoning Model Analysis [code](https://github.com/arcprize/hierarchical-reasoning-model-analysis). 
+
+### Citation 
+```bash
+
+```
