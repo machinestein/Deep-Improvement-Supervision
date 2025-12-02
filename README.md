@@ -25,7 +25,7 @@ pip install -r requirements.txt # install requirements
 wandb login YOUR-LOGIN # login if you want the logger to sync results to your Weights & Biases (https://wandb.ai/)
 ```
 
-### Dataset Preparation
+### Run model
 
 ```bash
 # ARC-AGI-1
@@ -47,6 +47,5 @@ python -m dataset.build_arc_dataset \
 
 ### Assume training of compact model on ARC-AGI-1 (modify config class for different settings):
 
-```bash
 torchrun --nproc_per_node=NUM_GPUS train_arc_tiny_corrupt.py
 ```
