@@ -48,8 +48,3 @@ torchrun --nproc_per_node=NUM_GPUS train_arc_tiny_corrupt.py
 ```
 ### Architecture & Base
 We adapted our method and code from the official codebase for "Less is More: Recursive Reasoning with Tiny Networks"  [Paper](https://arxiv.org/abs/2510.04871). As well as from the Hierarchical Reasoning Model [code](https://github.com/sapientinc/HRM) and the Hierarchical Reasoning Model Analysis [code](https://github.com/arcprize/hierarchical-reasoning-model-analysis). 
-
-### Citation 
-```bash
-
-```
